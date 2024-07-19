@@ -1,8 +1,7 @@
-// src/user-file/user-file.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserFile } from './user-file.entity';
+import { UserFile } from './entities/user-file.entity';
 import { CreateUserFileDto } from './dto/create-user-file.dto';
 import { UpdateUserFileDto } from './dto/update-user-file.dto';
 

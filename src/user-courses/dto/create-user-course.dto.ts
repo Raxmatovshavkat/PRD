@@ -1,4 +1,3 @@
-// src/user-course/dto/create-user-course.dto.ts
 import { IsDate, IsBoolean, IsNumber } from 'class-validator';
 
 export class CreateUserCourseDto {

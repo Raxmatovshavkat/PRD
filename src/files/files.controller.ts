@@ -1,4 +1,3 @@
-// src/file/file.controller.ts
 import { Controller, Post, Get, Param, Delete, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './files.service';

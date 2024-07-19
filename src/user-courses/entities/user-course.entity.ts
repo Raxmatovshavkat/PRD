@@ -1,4 +1,3 @@
-// src/user-course/user-course.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Auth } from '../../auth/entities/auth.entity';
 import { Course } from '../../courses/entities/course.entity';

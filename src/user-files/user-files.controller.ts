@@ -1,8 +1,8 @@
-// src/user-file/user-file.controller.ts
 import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
-import { UserFileService } from './user-file.service';
+import { UserFileService } from './user-files.service';
 import { CreateUserFileDto } from './dto/create-user-file.dto';
 import { UpdateUserFileDto } from './dto/update-user-file.dto';
+import { UserFile } from './entities/user-file.entity';
 
 @Controller('user-files')
 export class UserFileController {

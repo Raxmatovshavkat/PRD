@@ -1,4 +1,3 @@
-// src/user-file/user-file.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Auth } from '../../auth/entities/auth.entity';
 import { File } from '../../files/entities/file.entity';

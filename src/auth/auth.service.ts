@@ -3,7 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Auth } from './entities/auth.entity';
-import { SignInAuthDto } from './dto/create-auth.dto';
+import { SignInAuthDto } from './dto/signInAuthDto';
+import { SignUpAuthDto } from './dto/signUpAuthDto';
 
 @Injectable()
 export class AuthService {
@@ -12,8 +13,8 @@ export class AuthService {
     private authRepository: Repository<Auth>,
   ) { }
 
-  async signUp(signInAuthDto: SignInAuthDto): Promise<Auth> {
-    const auth = this.authRepository.create(signInAuthDto);
+  async signUp(signUpAuthDto: SignUpAuthDto): Promise<Auth> {
+    const auth = this.authRepository.create(signUpAuthDto);
     return this.authRepository.save(auth);
   }
 
