@@ -7,10 +7,10 @@ export class UserFile {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Auth)
+    @ManyToOne(() => Auth, auth => auth.userFiles)
     user: Auth;
 
-    @ManyToOne(() => File)
+    @ManyToOne(() => File, file => file.userFiles)
     file: File;
 
     @Column()

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { UserCourse } from 'src/user-courses/entities/user-course.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Course {
@@ -19,4 +20,7 @@ export class Course {
 
     @Column({ type: 'text', nullable: true })
     description: string;
+
+    @OneToMany(() => UserCourse, userCourse => userCourse.course)
+    userCourses: UserCourse[];
 }

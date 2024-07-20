@@ -7,10 +7,10 @@ export class UserCourse {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Auth)
+    @ManyToOne(() => Auth, auth => auth.userCourses)
     user: Auth;
 
-    @ManyToOne(() => Course)
+    @ManyToOne(() => Course, course => course.userCourses)
     course: Course;
 
     @Column()
