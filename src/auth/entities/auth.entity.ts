@@ -20,6 +20,6 @@ export class Auth {
     @Column()
     gender: string;
 
-    @Column({ default: true })
-    isActive: boolean;
+    @Column({ default: 'inactive' })
+    isActive: string;
 }

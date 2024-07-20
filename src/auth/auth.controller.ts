@@ -1,40 +1,43 @@
-// src/auth/auth.controller.ts
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { RegisterAuthDto } from './dto/signUpAuthDto';
+import { LoginAuthDto } from './dto/signInAuthDto';
 import { Auth } from './entities/auth.entity';
-import { SignInAuthDto } from './dto/signInAuthDto';
+import { JwtAuthGuard } from 'src/guard/jwt.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
-  @Post('signup')
-  signUp(@Body() signInAuthDto: SignInAuthDto): Promise<Auth> {
-    return this.authService.signUp(signInAuthDto);
+  @Post('register')
+  async register(@Body() registerAuthDto: RegisterAuthDto): Promise<Auth> {
+    return this.authService.register(registerAuthDto);
   }
 
-  @Post('signin')
-  signIn(@Body() signInAuthDto: SignInAuthDto): Promise<Auth | null> {
-    return this.authService.signIn(signInAuthDto);
+  @Post('login')
+  async login(@Body() loginAuthDto: LoginAuthDto): Promise<{ accessToken: string, refreshToken: string }> {
+    return this.authService.login(loginAuthDto);
   }
 
-  @Post('verify/:id')
-  verify(@Param('id') id: number): Promise<Auth | null> {
-    return this.authService.verify(id);
+  @Post('verify')
+  async verify(@Param('id') id: number,@Body('email') email: string){
+    return this.authService.verifyOtp(id,email);
   }
 
   @Post('logout/:id')
-  logout(@Param('id') id: number): Promise<void> {
+  @UseGuards(JwtAuthGuard)
+  async logout(@Param('id') id: number): Promise<void> {
     return this.authService.logout(id);
   }
 
-  @Post('refresh/:id')
-  refresh(@Param('id') id: number): Promise<Auth | null> {
-    return this.authService.refresh(id);
+  @Get('me/:id')
+  @UseGuards(JwtAuthGuard)
+  async getMe(@Param('id') id: number): Promise<Auth> {
+    return this.authService.getMe(id);
   }
 
-  @Get('me/:id')
-  getMe(@Param('id') id: number): Promise<Auth | null> {
-    return this.authService.getMe(id);
+  @Post('refresh-token')
+  async refreshToken(@Body('refreshToken') refreshToken: string): Promise<{ accessToken: string }> {
+    return this.authService.refreshToken(refreshToken);
   }
 }

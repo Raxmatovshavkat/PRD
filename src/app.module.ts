@@ -6,6 +6,7 @@ import { CourseModule } from './courses/courses.module';
 import { FileModule } from './files/files.module';
 import { UserCourseModule } from './user-courses/user-courses.module';
 import { UserFileModule } from './user-files/user-files.module';
+import { MailModule } from './mail/mail.module';
 
 
 @Module({
@@ -31,7 +32,8 @@ import { UserFileModule } from './user-files/user-files.module';
     CourseModule,
     FileModule,
     UserCourseModule,
-    UserFileModule
+    UserFileModule,
+    MailModule
   ],
   controllers: [],
   providers: [],
