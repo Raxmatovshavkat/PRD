@@ -1,39 +1,44 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuthModule } from './auth/auth.module';
-import { CourseModule } from './courses/courses.module';
-import { FileModule } from './files/files.module';
-import { UserCourseModule } from './user-courses/user-courses.module';
-import { UserFileModule } from './user-files/user-files.module';
-import { MailModule } from './mail/mail.module';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DATABASE_HOST'),
-        port: configService.get('DATABASE_PORT'),
-        username: configService.get('DATABASE_USERNAME'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE_NAME'),
-        entities: [__dirname + "/../**/*.entity{.ts,.js}"],
-        synchronize: true,
-      }),
-      inject: [ConfigService],
+    JwtModule.register({
+      global: true,
     }),
-    AuthModule,
-    CourseModule,
-    FileModule,
-    UserCourseModule,
-    UserFileModule,
-    MailModule
+    TypeOrmModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => {
+        const host = configService.get<string>('DATABASE_HOST');
+        const port = 5432;
+        const username = configService.get<string>('DATABASE_USERNAME');
+        const password = configService.get<string>('DATABASE_PASSWORD');
+        const database = configService.get<string>('DATABASE_DATABASE');
+
+        console.log('TypeORM Configuration:');
+        console.log(`Host: ${host}`);
+        console.log(`Port: ${port}`);
+        console.log(`Username: ${username}`);
+        console.log(`Database: ${database}`);
+
+        return {
+          type: 'postgres',
+          host: host,
+          port: port,
+          username: username,
+          password: password,
+          database: database,
+          entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+          synchronize: true, 
+        };
+      },
+      inject: [ConfigService],
+      
+    }),
   ],
   controllers: [],
   providers: [],
